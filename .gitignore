@@ -1,0 +1,6 @@
+node_modules/
+src/public/images/.*jpeg
+*.jpeg
+*.png
+*.pjpeg
+src/public/images/*
