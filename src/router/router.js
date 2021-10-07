@@ -7,5 +7,6 @@ const router = express.Router();
 router.get("/", Photo.index);
 
 router.post("/save", upload.single('filename'), Photo.save);
+router.get("/home", Photo.get);
 
 export default router;

@@ -8,19 +8,32 @@ const index = (req, res) => {
 
 const save = async (req, res) => {
 
-    const {title, description} = req.body;
+    const { title, description } = req.body;
+    
     const { filename } = req.file;
 
-    if(!title || !filename) return res.render("index", { error: "Existem campos vázios" })
+    if(!title || !filename || Object.keys(req.file).length === 0) return res.render("index", { error: "Existem campos vázios" })
+    try {
+        const result = await Img.create({
+            title: title,
+            filename: filename,
+            descript: description
+        });
+        return res.redirect("home");
 
-    const result = await Img.create({
-        title: title,
-        filename: filename,
-        descript: description
-    });
-    return res.render("index", result.dataValues);
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 
+const get = async (req, res) => {
+    const data = await Img.findAll();
+    return res.render("home", {data: data});
+}
+
+
+
 export default {
-    index, save
+    index, save, get
 }
